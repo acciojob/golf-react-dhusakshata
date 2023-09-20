@@ -1,40 +1,59 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import '../styles/App.css';
 
-function App() {
-    const [renderBall, setRenderBall] = useState(false);
-    const [ballPosition, setBallPosition] = useState({ left: "0px" });
-
-    const buttonClickHandler = () => {
-        setRenderBall(true);
-        // Add event listener for the right arrow key
-        document.addEventListener("keydown", handleKeyDown);
+class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            renderBall: false,
+            posi: 0,
+            ballPosition: { left: "0px" }
+        };
     }
 
-    // bind ArrowRight keydown event
-    componentDidMount() {
-        if (e.key === "ArrowRight") {
-                     // Get the current left position and convert it to a number
-                    const currentLeft = parseInt(ballPosition.left, 10);
-                     // Update the left position by 5 pixels
-                     const newLeft = currentLeft + 5;
-                     setBallPosition({ left: `${newLeft}px` });
-                 }
-             }
+    buttonClickHandler() {
+        this.setState({
+            renderBall: true
+        });
+        // Add event listener for the right arrow key
+        document.addEventListener("keydown", this.handleKeyDown);
+    }
 
-    const renderBallOrButton = () => {
-        if (renderBall) {
-            return <div className="ball" style={ballPosition}></div>
-        } else {
-            return <button className="start" onClick={buttonClickHandler}>Start</button>
+    handleKeyDown = (e) => {
+        if (e.key === "ArrowRight") {
+            const currentLeft = parseInt(this.state.ballPosition.left, 10);
+            const newLeft = currentLeft + 5;
+            this.setState({
+                ballPosition: { left: `${newLeft}px` }
+            });
         }
     }
 
-    return (
-        <div className="playground">
-            {renderBallOrButton()}
-        </div>
-    );
+    componentDidMount() {
+        // Move the event listener registration to componentDidMount
+        document.addEventListener("keydown", this.handleKeyDown);
+    }
+
+    componentWillUnmount() {
+        // Remove the event listener when the component unmounts
+        document.removeEventListener("keydown", this.handleKeyDown);
+    }
+
+    renderBallOrButton() {
+        if (this.state.renderBall) {
+            return <div className="ball" style={this.state.ballPosition}></div>;
+        } else {
+            return <button className="start" onClick={this.buttonClickHandler}>Start</button>;
+        }
+    }
+
+    render() {
+        return (
+            <div className="playground">
+                {this.renderBallOrButton()}
+            </div>
+        );
+    }
 }
 
 export default App;
