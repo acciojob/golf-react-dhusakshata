@@ -11,6 +11,15 @@ function App() {
         document.addEventListener("keydown", handleKeyDown);
     }
 
+    // const handleKeyDown = (e) => {
+    //     if (e.key === "ArrowRight") {
+    //         // Get the current left position and convert it to a number
+    //         const currentLeft = parseInt(ballPosition.left, 10);
+    //         // Update the left position by 5 pixels
+    //         const newLeft = currentLeft + 5;
+    //         setBallPosition({ left: `${newLeft}px` });
+    //     }
+    // }
     const handleKeyDown = (e) => {
         if (e.key === "ArrowRight") {
             // Get the current left position and convert it to a number
@@ -20,6 +29,7 @@ function App() {
             setBallPosition({ left: `${newLeft}px` });
         }
     }
+    
 
     const renderBallOrButton = () => {
         if (renderBall) {
