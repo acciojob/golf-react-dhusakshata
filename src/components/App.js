@@ -1,48 +1,39 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import '../styles/App.css';
 
-class App extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            renderBall: false,
-            posi : 0,
-            ballPosition: { left: "0px" }
-        };
-        this.renderChoice = this.renderBallOrButton.bind(this)
-        this.buttonClickHandler = this.buttonClickHandler.bind(this)
-    };
+function App() {
+    const [renderBall, setRenderBall] = useState(false);
+    const [ballPosition, setBallPosition] = useState({ left: "0px" });
 
-    buttonClickHandler() {
-   
-   }
-    renderBallOrButton() {
-		if (this.state.renderBall) {
-		    return <div className="ball" style={this.state.ballPosition}></div>
-		} else {
-		    return <button onClick={this.buttonClickHandler} >Start</button>
-		}
+    const buttonClickHandler = () => {
+        setRenderBall(true);
+        // Add event listener for the right arrow key
+        document.addEventListener("keydown", handleKeyDown);
     }
 
-    // bind ArrowRight keydown event
-    componentDidMount() {
-      document.addEventListener("keydown",(e)=>{
-        if(e.keyCode===39){
-            this.setState({
-                ballPosition:{
-                    left:this.state.posi+5+ "px"},posi:this.state.posi + 5})
-                }
-            });
+    const handleKeyDown = (e) => {
+        if (e.key === "ArrowRight") {
+            // Get the current left position and convert it to a number
+            const currentLeft = parseInt(ballPosition.left, 10);
+            // Update the left position by 5 pixels
+            const newLeft = currentLeft + 5;
+            setBallPosition({ left: `${newLeft}px` });
         }
-      
-    render() {
-        return (
-            <div className="playground">
-                {this.renderBallOrButton()}
-            </div>
-        )
     }
-}
 
+    const renderBallOrButton = () => {
+        if (renderBall) {
+            return <div className="ball" style={ballPosition}></div>
+        } else {
+            return <button className="start" onClick={buttonClickHandler}>Start</button>
+        }
+    }
+
+    return (
+        <div className="playground">
+            {renderBallOrButton()}
+        </div>
+    );
+}
 
 export default App;
