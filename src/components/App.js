@@ -23,6 +23,7 @@ class App extends Component {
 
     handleKeyDown(e) {
         if (e.key === "ArrowRight") {
+            e.preventDefault(); // Prevent default arrow key behavior
             const currentLeft = parseInt(this.state.ballPosition.left, 10);
             const newLeft = currentLeft + 5;
             this.setState({
@@ -45,7 +46,7 @@ class App extends Component {
         if (this.state.renderBall) {
             return <div className="ball" style={this.state.ballPosition}></div>;
         } else {
-            return <button className="start" onClick={this.buttonClickHandler}>Start</button>;
+            return <button className="start" onClick={() => this.buttonClickHandler()}>Start</button>;
         }
     }
 
