@@ -6,9 +6,11 @@ class App extends Component {
         super(props);
         this.state = {
             renderBall: false,
-            posi: 0,
             ballPosition: { left: "0px" }
         };
+
+        this.buttonClickHandler = this.buttonClickHandler.bind(this);
+        this.handleKeyDown = this.handleKeyDown.bind(this);
     }
 
     buttonClickHandler() {
@@ -19,7 +21,7 @@ class App extends Component {
         document.addEventListener("keydown", this.handleKeyDown);
     }
 
-    handleKeyDown = (e) => {
+    handleKeyDown(e) {
         if (e.key === "ArrowRight") {
             const currentLeft = parseInt(this.state.ballPosition.left, 10);
             const newLeft = currentLeft + 5;
