@@ -17,13 +17,10 @@ class App extends Component {
         this.setState({
             renderBall: true
         });
-        // Add event listener for the right arrow key
-        document.addEventListener("keydown", this.handleKeyDown);
     }
 
     handleKeyDown(e) {
         if (e.key === "ArrowRight") {
-            e.preventDefault(); // Prevent default arrow key behavior
             const currentLeft = parseInt(this.state.ballPosition.left, 10);
             const newLeft = currentLeft + 5;
             this.setState({
@@ -33,7 +30,7 @@ class App extends Component {
     }
 
     componentDidMount() {
-        // Move the event listener registration to componentDidMount
+        // Add event listener for the right arrow key in componentDidMount
         document.addEventListener("keydown", this.handleKeyDown);
     }
 
@@ -46,7 +43,7 @@ class App extends Component {
         if (this.state.renderBall) {
             return <div className="ball" style={this.state.ballPosition}></div>;
         } else {
-            return <button className="start" onClick={() => this.buttonClickHandler()}>Start</button>;
+            return <button className="start" onClick={this.buttonClickHandler}>Start</button>;
         }
     }
 
